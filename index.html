@@ -8,9 +8,9 @@
     <script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
     <link rel="stylesheet" href="./src/css/index.css">
 </head>
-<body style="width: 100vw;height: 100vh;display: flex;justify-content: center;align-items: center;padding: 0;margin: 0;">
+<body style="width: 100vw;height: 100vh;display: flex;align-items: center;padding: 0;margin: 0;">
     <div class="swiperSwiper">
-        <div class="swiper-box">
+        <div class="swiper-box" style="margin-left: 30px;">
             <div class="swiper-alone">
                 <img src="./src/img/1.jpg">
             </div>
@@ -20,16 +20,18 @@
             <div class="swiper-alone">
                 <img src="./src/img/3.jpg">
             </div>
+            <div class="swiper-alone">
+                <img src="./src/img/2.jpg">
+            </div>
         </div>
-        <div class="swiper-dots">
-
-        </div>
+        <div class="swiper-dots"></div>
     </div>
 <script src="index.js"></script>
 <script>
 window.onload = function() {
     var swiper = new switchSwiper({
-        autoPlay: false
+        autoPlay: false,
+        zoom: 0.97
     });
 }
     

@@ -1,6 +1,6 @@
 .swiperSwiper{
-    width: 300px;
-    height: 474px;
+    width: 300px * 0.8;
+    height: 474px * 0.8;
     box-sizing: border-box;
 
     *{
@@ -9,8 +9,9 @@
 
     .swiper-box{
         width: 100%;
+        height: 100%;
         position: relative;
-
+        
         .swiper-alone{
             width: 100%;
             position: absolute;
