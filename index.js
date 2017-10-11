@@ -40,9 +40,9 @@ var switchSwiper = function (options) {
 
     // 向左切换
     this.theLeft = function() {
-        // 先把第一个元素做出场动画
-        this.sonEvent = this.el.children('.swiper-box').children('.swiper-alone');
-        this.sonEvent.eq(0).css({
+        // 初始更新一下DOM列表，然后把第一个元素做出场动画
+        this.sonEventNew = this.el.children('.swiper-box').children('.swiper-alone');
+        this.sonEventNew.eq(0).css({
             'transform': 'translateX(-200px)',
             'opacity': 0
         });
@@ -51,8 +51,8 @@ var switchSwiper = function (options) {
             var scaleNum = 1 - (i * this.zoom()),
                 translateXNum = i * this.indentation;
 
-            this.sonEvent.eq(i).css({'z-index': (this.sonEventNum - i + 1)});
-            this.sonEvent.eq(i + 1).css({'transform': 'scale('+scaleNum+') translateX('+translateXNum+'px)'});
+            this.sonEventNew.eq(i).css({'z-index': (this.sonEventNum - i + 1)});
+            this.sonEventNew.eq(i + 1).css({'transform': 'scale('+scaleNum+') translateX('+translateXNum+'px)'});
         }
 
         // 计算出动画后最后一个元素应该在的位置
@@ -60,7 +60,7 @@ var switchSwiper = function (options) {
             lastTranslateXNum = (this.sonEventNum - 1) * this.indentation;
 
         // 然后再克隆第一个元素，将元素置于最后
-        var lastEvent = this.sonEvent.eq(0).clone();
+        var lastEvent = this.sonEventNew.eq(0).clone();
         lastEvent.appendTo('.swiper-box');
         lastEvent.css({
             'z-index': '1',
@@ -71,9 +71,11 @@ var switchSwiper = function (options) {
         // 最后在动画结束之后删除第一个元素
         var than = this;
         setTimeout(function() {
-            than.sonEvent.eq(0).remove();
+            than.sonEventNew.eq(0).remove();
         }, this.autoPlaySpeed);
     }
+
+    // 能否写一个专门用来计算缩放缩进的函数？
 
     // 向右切换
     this.theRight = function() {
