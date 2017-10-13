@@ -38,14 +38,14 @@ var switchSwiper = function (options) {
         this.sonEvent.css('transition', 'all '+ this.autoPlaySpeed +'ms ease');
     }
 
+    // 能否写一个专门用来计算缩放缩进的函数？
+
     // 向左切换
     this.theLeft = function() {
         // 初始更新一下DOM列表，然后把第一个元素做出场动画
         this.sonEventNew = this.el.children('.swiper-box').children('.swiper-alone');
-        this.sonEventNew.eq(0).css({
-            'transform': 'translateX(-200px)',
-            'opacity': 0
-        });
+        this.sonEventNew.eq(0).css({'transform': 'translateX(-200px)','opacity': 0});
+
         // 然后做剩下元素的动画
         for(let i = 0;i < this.sonEventNum;i ++) {
             var scaleNum = 1 - (i * this.zoom()),
@@ -62,11 +62,7 @@ var switchSwiper = function (options) {
         // 然后再克隆第一个元素，将元素置于最后
         var lastEvent = this.sonEventNew.eq(0).clone();
         lastEvent.appendTo('.swiper-box');
-        lastEvent.css({
-            'z-index': '1',
-            'transform': 'scale('+lastScaleNum+') translateX('+lastTranslateXNum+'px)',
-            'opacity': '1'
-        });
+        lastEvent.css({'z-index': '1','transform': 'scale('+lastScaleNum+') translateX('+lastTranslateXNum+'px)','opacity': '1'});
 
         // 最后在动画结束之后删除第一个元素
         var than = this;
@@ -75,11 +71,9 @@ var switchSwiper = function (options) {
         }, this.autoPlaySpeed);
     }
 
-    // 能否写一个专门用来计算缩放缩进的函数？
-
     // 向右切换
     this.theRight = function() {
-
+        
     }
     
     // 自动轮播
