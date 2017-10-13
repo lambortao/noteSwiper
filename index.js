@@ -111,14 +111,9 @@ var switchSwiper = function (options) {
         this.lastEventClone.css({'transform': 'translateX(0)','opacity': 1});
     }
     
-    // 手动向左切换
-    this.selectLeft = function() {
-
-    }
-
-    // 手动向右切换
-    this.selectRight = function() {
-
+    // 手动切换
+    this.manualSelect = function() {
+        
     }
 
     // 自动轮播
