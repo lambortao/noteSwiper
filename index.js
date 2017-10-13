@@ -17,10 +17,7 @@ var switchSwiper = function (options) {
     this.dots = false;
     // 后续图片缩放比例，精确到小数点后两位
     this.zoom = function() {
-        var zoom = options.zoom || 0.9,
-            num = 100 - (zoom * 100);
-
-        return num / 100;
+        return (100 - ((options.zoom || 0.9) * 100)) / 100;
     }
 
     // 初始的css设置
@@ -38,7 +35,22 @@ var switchSwiper = function (options) {
         this.sonEvent.css('transition', 'all '+ this.autoPlaySpeed +'ms ease');
     }
 
-    // 能否写一个专门用来计算缩放缩进的函数？
+    // 监听动画结束 - 辅助性函数
+    this.animateEnd = function (event, fun) {
+        function transitionSonEnd() {
+            fun();
+            event.off('transitionend',transitionSonEnd);
+        }
+        event.on('transitionend',transitionSonEnd);
+    }
+
+    // 根据排列计算位置 - 辅助性函数
+    this.countScale = function(num) {
+        return 1 - (num * this.zoom());
+    }
+    this.countTranslateX = function(num) {
+        return num * this.indentation;
+    }
 
     // 向左切换
     this.theLeft = function() {
@@ -73,16 +85,49 @@ var switchSwiper = function (options) {
 
     // 向右切换
     this.theRight = function() {
-        
+        // 初始更新一下DOM列表，然后克隆最后出最后一个子元素
+        this.sonEventNew = this.el.children('.swiper-box').children('.swiper-alone');
+        var lastEvent = this.sonEventNew.eq(this.sonEventNum - 1);
+        this.lastEventClone = lastEvent.clone();
+
+        // 监听最后一个元素消失后就删除
+        lastEvent.css('opacity', '0');
+        this.animateEnd(lastEvent, function() {
+            lastEvent.remove();
+        });
+
+        // 将其他的元素向后移动一位
+        for(let i = 0;i < (this.sonEventNum);i ++) {
+            // 计算位置
+            var scaleNum = 1 - ((i + 1) * this.zoom()),
+                translateXNum = (i + 1) * this.indentation;
+
+            this.sonEventNew.eq(i).css({'transform': 'scale('+scaleNum+') translateX('+translateXNum+'px)', 'z-index': (this.sonEventNum - i - 1)});
+        }
+
+        // 将初始时克隆的元素放到首位并出现
+        this.lastEventClone.css({'transform': 'translateX(-200px)','opacity': 0, 'z-index': this.sonEventNum});
+        this.lastEventClone.prependTo('.swiper-box');
+        this.lastEventClone.css({'transform': 'translateX(0)','opacity': 1});
     }
     
+    // 手动向左切换
+    this.selectLeft = function() {
+
+    }
+
+    // 手动向右切换
+    this.selectRight = function() {
+
+    }
+
     // 自动轮播
     this.autoPlayFun = function() {
         if(this.autoPlay){
             let than = this;
             (function swiperPlay() {
                 setTimeout(function(){
-                    than.theLeft();
+                    than.theRight();
                     swiperPlay();
                 }, than.autoPlayTime);
             })();
