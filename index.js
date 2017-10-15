@@ -20,6 +20,8 @@ var switchSwiper = function (options) {
         return (100 - ((options.zoom || 0.9) * 100)) / 100;
     }
 
+    var clearAutoPlay;
+
     // 初始的css设置
     this.settingCss = function() {
         // 根据排列设置z-index和缩进
@@ -50,6 +52,11 @@ var switchSwiper = function (options) {
     }
     this.countTranslateX = function(num) {
         return num * this.indentation;
+    }
+    
+    // 获取手指拖动切换的阈值
+    this.moveValue = function() {
+        return (parseInt(this.sonEvent.css('width')) / 2);
     }
 
     // 向左切换
@@ -113,7 +120,55 @@ var switchSwiper = function (options) {
     
     // 手动切换
     this.manualSelect = function() {
-        
+        var touchMain = document.querySelector('.swiper-box'),
+            moveEvent,
+            startX,moveX,endX,
+            than = this,
+            moveDistance;
+
+        function touchs(e) {
+            var touch = e.touches[0];
+            startX = Math.floor(touch.pageX);
+            // console.log('touchstart = ' + startX);
+
+            // 鼠标按住的时候获取当前的第一个元素，并取消延迟
+            moveEvent = $('.swiper-box').children('.swiper-alone').eq(0);
+            moveEvent.css('transition', 'none');
+            // 鼠标按住的时候停止自动播放
+            window.clearTimeout(clearAutoPlay);
+        }
+
+        function touchm(e) {
+            var touch = e.touches[0];
+            moveX = Math.floor(touch.pageX);
+
+            // 计算手指拖动的距离，并设置给第一个子元素
+            moveDistance = moveX - startX;
+            moveEvent.css('transform', 'translateX('+ moveDistance +'px)');
+        }
+
+        function touche(e) {
+            var touche = e.changedTouches[0];
+            endX = Math.floor(touche.pageX);
+            moveEvent.css('transition', 'all '+ than.autoPlaySpeed +'ms ease');
+            // console.log('touchend = ' + endX);
+            
+            // 手指离开屏幕的时候计算当前的位置
+            
+            if(moveDistance >= 120){
+                than.theRight();
+            }else if(moveDistance <= -120){
+                than.theLeft();
+            }else{
+                moveEvent.css('transform', 'translateX(0px)');  
+            }
+            // 手指离开屏幕的时候开启自动播放
+            than.autoPlayFun();
+        }
+
+        touchMain.addEventListener('touchstart', touchs, false);
+        touchMain.addEventListener('touchmove', touchm, false);
+        touchMain.addEventListener('touchend', touche, false);
     }
 
     // 自动轮播
@@ -121,8 +176,8 @@ var switchSwiper = function (options) {
         if(this.autoPlay){
             let than = this;
             (function swiperPlay() {
-                setTimeout(function(){
-                    than.theRight();
+                clearAutoPlay = window.setTimeout(function(){
+                    than.theLeft();
                     swiperPlay();
                 }, than.autoPlayTime);
             })();
@@ -133,6 +188,7 @@ var switchSwiper = function (options) {
     this.init = function(){
         this.settingCss();
         this.autoPlayFun();
+        this.manualSelect();
     }
 
     this.init();
