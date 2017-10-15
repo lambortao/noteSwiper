@@ -121,10 +121,8 @@ var switchSwiper = function (options) {
     // 手动切换
     this.manualSelect = function() {
         var touchMain = document.querySelector('.swiper-box'),
-            moveEvent,
-            startX,moveX,endX,
-            than = this,
-            moveDistance;
+            moveEvent,startX,moveX,endX,moveDistance,
+            than = this;
 
         function touchs(e) {
             var touch = e.touches[0];
