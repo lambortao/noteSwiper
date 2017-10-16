@@ -7,7 +7,7 @@
 # html结构
 ```
     <div class="swiperSwiper">
-        <div class="swiper-box" style="margin-left: 60px;">
+        <div class="swiper-box">
             <div class="swiper-alone">
                 <img src="./src/img/1.jpg">
             </div>
@@ -45,3 +45,4 @@
 
 # 预览地址：
 >   http://zytao.cc/demo/noteSwiper/
+>   <img src="./src/img/ewm.png">
