@@ -115,7 +115,12 @@ var switchSwiper = function (options) {
         // 将初始时克隆的元素放到首位并出现
         this.lastEventClone.prependTo('.swiper-box');
         this.lastEventClone.css({'transition': 'all '+ this.autoPlaySpeed +'ms ease', 'transform': 'translateX(-200px)','opacity': 0, 'z-index': this.sonEventNum});
-        this.lastEventClone.css({'transform': 'translateX(0px)','opacity': 1});
+        var than = this;
+        setTimeout(function(){
+            than.lastEventClone.css({
+                'transform': 'translateX(0px)',
+                'opacity': 1});
+        },100);
     }
     
     // 手动切换
