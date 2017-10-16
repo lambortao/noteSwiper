@@ -44,5 +44,5 @@
 
 
 # 预览地址：
->   http://zytao.cc/demo/noteSwiper/
->   <img src="./src/img/ewm.png">
+>   - http://zytao.cc/demo/noteSwiper/
+>   - <img src="./src/img/ewm.png">
