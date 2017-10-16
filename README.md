@@ -6,10 +6,10 @@
 # 用法
 需要引入index.js和src/css目录下的index.css，然后遵循html目录并设置几个常用参数即可
 >   new switchSwiper({
->       autoPlay: true,
->       zoom: 0.95,
->       autoPlayTime: 3000
->   });
+       autoPlay: true,
+       zoom: 0.95,
+       autoPlayTime: 3000
+   });
 
 # html结构
 >   <div class="swiperSwiper">
