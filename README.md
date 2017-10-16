@@ -33,11 +33,11 @@
 ```
 
 # API
->   - autoPlay - 是否开启自动播放
->   - autoPlayTime - 自动播放的时间间隔
->   - autoPlaySpeed - 自动播放的图片移动速度，也指一般情况下图片的滚动速度
->   - indentation - 图片的缩进尺寸
->   - zoom - 图片的缩放比例，最小0最大1，如设置为0.9则第二个元素的大小是0.9，第三个是0.8以此类推
+>   - autoPlay - boolean - 是否开启自动播放
+>   - autoPlayTime - （number）毫秒 - 自动播放的时间间隔
+>   - autoPlaySpeed - （number）毫秒 - 自动播放的图片移动速度，也指一般情况下图片的滚动速度
+>   - indentation - （number）像素 - 图片的缩进尺寸
+>   - zoom - （number）scale - 图片的缩放比例，最小0最大1，如设置为0.9则第二个元素的大小是0.9，第三个是0.8以此类推
 
 
 # 预览地址：
